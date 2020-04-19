@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/workspace/RoboND_Project5/catkin_ws/devel/setup.sh
