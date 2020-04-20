@@ -14,9 +14,9 @@ xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; ro
 sleep 5
 
 # Launch rviz
-xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; roslaunch turtlebot_rviz_launchers view_navigation.launch" 
+xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; roslaunch turtlebot_rviz_launchers view_navigation.launch" &
 
 sleep 5
 
 # Launch pick object node
-xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun pick_objects pick_objects view_navigation.launch" 
+xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun pick_objects pick_objects" 

@@ -5,28 +5,6 @@
 // Define a client for to send goal requests to the move_base server through a SimpleActionClient
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
-bool setGoal(MoveBaseClient ac, double x, double y){
-  // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = 1.0;
-  goal.target_pose.pose.orientation.w = 1.0;
-
-   // Send the goal position and orientation for the robot to reach
-  ROS_INFO("Sending goal");
-  ac.sendGoal(goal);
-
-  // Wait an infinite time for the results
-  ac.waitForResult();
-
-  bool status = ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED;
-  
-  // Check if the robot reached its goal
-  if(status)
-    ROS_INFO("Hooray, goal reached");
-  else
-    ROS_INFO("Booooo, goal was not reached");
-  
-  return status;
-}
 
 int main(int argc, char** argv){
   // Initialize the simple_navigation_goals node
@@ -46,12 +24,51 @@ int main(int argc, char** argv){
   goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
 
-  setGoal(ac, 1.0, 0.0);
+  // Send goal 1
+  // Define a position and orientation for the robot to reach
+  goal.target_pose.pose.position.x = 1.0;
+  goal.target_pose.pose.orientation.w = 1.0;
+
+   // Send the goal position and orientation for the robot to reach
+  ROS_INFO("Sending goal");
+  ac.sendGoal(goal);
+
+  // Wait an infinite time for the results
+  ac.waitForResult();
+
+  bool status = ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED;
+  
+  // Check if the robot reached its goal
+  if(status)
+    ROS_INFO("Hooray, goal reached");
+  else
+    ROS_INFO("Booooo, goal was not reached");
   // Wait 5 sec for move_base action server to come up
   while(!ac.waitForServer(ros::Duration(5.0))){
     ROS_INFO("Simulating object pickup time...\nBut, really we are just waiting for no reason.");
   }
-  setGoal(ac, 0.0, 0.0);
+  
+  
+  // Sending Goal 2
+  // Define a position and orientation for the robot to reach
+  goal.target_pose.pose.position.x = 1.0;
+  goal.target_pose.pose.orientation.w = 1.0;
+
+   // Send the goal position and orientation for the robot to reach
+  ROS_INFO("Sending goal");
+  ac.sendGoal(goal);
+
+  // Wait an infinite time for the results
+  ac.waitForResult();
+
+  status = ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED;
+  
+  // Check if the robot reached its goal
+  if(status)
+    ROS_INFO("Hooray, goal reached");
+  else
+    ROS_INFO("Booooo, goal was not reached");
+  
 
   return 0;
 }
