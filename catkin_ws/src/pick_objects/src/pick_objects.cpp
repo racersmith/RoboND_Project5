@@ -5,6 +5,9 @@
 // Define a client for to send goal requests to the move_base server through a SimpleActionClient
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
+double goal_1[2] = {5.0, 5.0};
+double goal_2[2] = {0.0, 0.0};
+
 
 int main(int argc, char** argv){
   // Initialize the simple_navigation_goals node
@@ -26,11 +29,11 @@ int main(int argc, char** argv){
 
   // Send goal 1
   // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = 1.0;
-  goal.target_pose.pose.orientation.w = 1.0;
+  goal.target_pose.pose.position.x = goal_1[0];
+  goal.target_pose.pose.orientation.w = goal_1[1];
 
    // Send the goal position and orientation for the robot to reach
-  ROS_INFO("Sending goal");
+  ROS_INFO("Sending goal 1");
   ac.sendGoal(goal);
 
   // Wait an infinite time for the results
@@ -40,9 +43,9 @@ int main(int argc, char** argv){
   
   // Check if the robot reached its goal
   if(status)
-    ROS_INFO("Hooray, goal reached");
+    ROS_INFO("Hooray, goal 1 reached");
   else
-    ROS_INFO("Booooo, goal was not reached");
+    ROS_INFO("Booooo, goal 1 was not reached");
   // Wait 5 sec for move_base action server to come up
   while(!ac.waitForServer(ros::Duration(5.0))){
     ROS_INFO("Simulating object pickup time...\nBut, really we are just waiting for no reason.");
@@ -51,11 +54,11 @@ int main(int argc, char** argv){
   
   // Sending Goal 2
   // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = 1.0;
-  goal.target_pose.pose.orientation.w = 1.0;
+  goal.target_pose.pose.position.x = goal_2[0];
+  goal.target_pose.pose.orientation.w = goal_2[1];
 
    // Send the goal position and orientation for the robot to reach
-  ROS_INFO("Sending goal");
+  ROS_INFO("Sending goal 2");
   ac.sendGoal(goal);
 
   // Wait an infinite time for the results
@@ -65,9 +68,9 @@ int main(int argc, char** argv){
   
   // Check if the robot reached its goal
   if(status)
-    ROS_INFO("Hooray, goal reached");
+    ROS_INFO("Hooray, goal 2 reached");
   else
-    ROS_INFO("Booooo, goal was not reached");
+    ROS_INFO("Booooo, goal 2 was not reached");
   
 
   return 0;
