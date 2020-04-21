@@ -5,8 +5,8 @@
 // Define a client for to send goal requests to the move_base server through a SimpleActionClient
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
-double goal_1[2] = {5.0, 5.0};
-double goal_2[2] = {0.0, 0.0};
+double goal_1[2] = {5.0, 5.0, 5.0};
+double goal_2[2] = {0.0, 0.0, 0.0};
 
 
 int main(int argc, char** argv){
@@ -30,7 +30,8 @@ int main(int argc, char** argv){
   // Send goal 1
   // Define a position and orientation for the robot to reach
   goal.target_pose.pose.position.x = goal_1[0];
-  goal.target_pose.pose.orientation.w = goal_1[1];
+  goal.target_pose.pose.position.y = goal_1[1];
+  goal.target_pose.pose.orientation.w = goal_1[2];
 
    // Send the goal position and orientation for the robot to reach
   ROS_INFO("Sending goal 1");
@@ -55,7 +56,8 @@ int main(int argc, char** argv){
   // Sending Goal 2
   // Define a position and orientation for the robot to reach
   goal.target_pose.pose.position.x = goal_2[0];
-  goal.target_pose.pose.orientation.w = goal_2[1];
+  goal.target_pose.pose.position.y = goal_2[1];
+  goal.target_pose.pose.orientation.w = goal_2[2];
 
    // Send the goal position and orientation for the robot to reach
   ROS_INFO("Sending goal 2");
