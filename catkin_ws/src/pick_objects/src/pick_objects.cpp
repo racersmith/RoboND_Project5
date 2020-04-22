@@ -5,8 +5,8 @@
 // Define a client for to send goal requests to the move_base server through a SimpleActionClient
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
-double goal_1[3] = {-5.0, -1.5, -1.0};
-double goal_2[3] = {0.0, 0.0, 0.0};
+double goal_1[3] = {2.75, -0.83, -1.35};
+double goal_2[3] = {1.0, -4.5, -2.9};
 
 
 bool moveTo(double x, double y, double w){
@@ -58,8 +58,10 @@ int main(int argc, char** argv){
     
   if (status){
     // Wait 5 sec for move_base action server to come up
+    ros::spinOnce();
     ROS_INFO("Simulating object pickup time...\nBut, really we are just waiting for no reason.");
     ros::Duration(5.0).sleep();
+    ros::spinOnce();
 	status = moveTo(goal_2[0], goal_2[0], goal_2[0]);
   }
   
