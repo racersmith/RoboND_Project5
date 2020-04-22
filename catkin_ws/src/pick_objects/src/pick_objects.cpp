@@ -54,7 +54,7 @@ int main(int argc, char** argv){
   ros::init(argc, argv, "pick_objects");
 
   bool status;
-  status = moveTo(goal_1[0], goal_1[0], goal_1[0]);
+  status = moveTo(goal_1[0], goal_1[1], goal_1[2]);
     
   if (status){
     // Wait 5 sec for move_base action server to come up
@@ -62,7 +62,7 @@ int main(int argc, char** argv){
     ROS_INFO("Simulating object pickup time...\nBut, really we are just waiting for no reason.");
     ros::Duration(5.0).sleep();
     ros::spinOnce();
-	status = moveTo(goal_2[0], goal_2[0], goal_2[0]);
+	status = moveTo(goal_2[0], goal_2[1], goal_2[2]);
   }
   
 
