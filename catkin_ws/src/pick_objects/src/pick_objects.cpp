@@ -8,7 +8,7 @@ typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseCl
 double goal_1[3] = {2.75, -0.83, -1.35};
 double goal_2[3] = {1.0, -4.5, -2.9};
 
-
+  
 bool moveTo(double x, double y, double w){
   //tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
@@ -47,20 +47,40 @@ bool moveTo(double x, double y, double w){
   }
 }
 
+void simulatePickup(){
+  // Wait 5 sec to simulate object pickup
+  ROS_INFO("Simulating object pickup");
+  std::cout << "Picking up object... ";
+  double end_time = ros::Time::now().toSec() + 5.0;
+  while (end_time > ros::Time::now().toSec()){
+//     ros::spinOnce();
+  }
+  std::cout << "Complete" << std::endl;
+}
+
 
 int main(int argc, char** argv){
   // Initialize the simple_navigation_goals node
   ros::init(argc, argv, "pick_objects");
 
   bool status;
+  
+  
   status = moveTo(goal_1[0], goal_1[1], goal_1[2]);
   ROS_INFO("JUST EXITED FIRST GOAL");
+  std::cout << "Exit move 1, " << status << std::endl;
   if (status){
-    // Wait 5 sec to simulate object pickup
-    ROS_INFO("Simulating object pickup time...\nBut, really we are just waiting for no reason.");
-    ros::Duration(5.0).sleep();
+    std::cout << "Success" << std::endl;
+	simulatePickup();
 	status = moveTo(goal_2[0], goal_2[1], goal_2[2]);
   }
+  status = moveTo(goal_2[0], goal_2[1], goal_2[2]);
   
+  if (status)
+  	ROS_INFO("Drop off location reached");
+  else
+    ROS_INFO("Failed to reach drop off location");
+  
+  ros::spin();
   return 0;
 }
