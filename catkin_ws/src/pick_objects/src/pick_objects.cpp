@@ -39,9 +39,9 @@ int main(int argc, char** argv){
 
   // set up the frame parameters
   goal.target_pose.header.frame_id = "map";
-  goal.target_pose.header.stamp = ros::Time::now();
 
   // Define a position and orientation for the robot to reach
+  goal.target_pose.header.stamp = ros::Time::now();
   goal.target_pose.pose.position.x = goal_1[0];
   goal.target_pose.pose.position.y = goal_1[1];
   goal.target_pose.pose.orientation.z = goal_1[2];
@@ -58,6 +58,7 @@ int main(int argc, char** argv){
     simulatePickup();
   
     // Define a position and orientation for the robot to reach
+    goal.target_pose.header.stamp = ros::Time::now();
     goal.target_pose.pose.position.x = goal_2[0];
     goal.target_pose.pose.position.y = goal_2[1];
     goal.target_pose.pose.orientation.z = goal_2[2];
