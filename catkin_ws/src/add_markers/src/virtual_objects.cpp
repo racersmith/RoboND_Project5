@@ -1,34 +1,52 @@
-// subscribe to move_base/status
-// status_list.status
+// subscribe to move_base/result
+// move_base_msgs/MoveBaseActionResult
+// status.status
 // 1 == goal accepted, trying to reach goal
 // 3 == goal reached
 // This will tell us if we should pick up or put down the object
 
 // subscribe to move_base/current_goal
-// gemoetry_msgs/PoseStamped
+// geometry_msgs/PoseStamped
 
-// #include <move_base_msgs/MoveBaseAction.h>
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
+#include <move_base_msgs/MoveBaseAction.h>
+#include <geometry_msgs/PoseStamped.h>
 
-
-double goal_1[4] = {-3.00, 0.116, -0.75, 0.65};
-double goal_2[4] = {1.49, 1.43, -0.03, 0.99};
 
 int step = 0;
 
 float box_size=0.25;
 float color[3] = {1.0, 0.0, 0.69};
 
+double box_pose[2];
+bool ready = false;
 
-void goalPositionCb(const 
+void goal_cb(const geometry_msgs::PoseStamped& goal){
+  ROS_INFO("Recieved Goal in virtual objects");
+  box_pose[0] = goal.pose.position.x;
+  box_pose[1] = goal.pose.position.y;
+  ready = true;
+}
+
+void result_cb(const move_base_msgs::MoveBaseActionResult& result){
+  ROS_INFO("Status recieved in virtual objects"); 
+  if (result.status.status == 3){
+    step++;
+  }
+}
 
 
 int main( int argc, char** argv ) {
   ros::init(argc, argv, "add_markers");
   ros::NodeHandle n;
   ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 1);
-
+  ros::Subscriber goal_pose_sub = n.subscribe("/move_base/current_goal", 1, goal_cb);
+  ros::Subscriber result_sub = n.subscribe("/move_base/result", 1, result_cb);
+  ros::Rate loop_rate(10);
+  
+  
+  // Marker setup
   visualization_msgs::Marker marker;
   // Set the frame ID and timestamp.  See the TF tutorials for information on these.
   marker.header.frame_id = "/map";
@@ -54,46 +72,56 @@ int main( int argc, char** argv ) {
   marker.color.r = color[0];
   marker.color.g = color[1];
   marker.color.b = color[2];
-  marker.color.a = 1.0;
+  marker.color.a = 0.0;
   
   marker.lifetime = ros::Duration();
   
   // Wait for our viz subscriber
   while(marker_pub.getNumSubscribers() < 1){
     ROS_WARN_ONCE("Please create a subscriber to the marker");
-    sleep(1);
+    ros::spinOnce();
+    loop_rate.sleep();
   }
   
-  ROS_INFO("Subscriber found");
+  
+  // Wait for first goal pose
+  while(!ready){
+    ROS_INFO_ONCE("Waiting for pickup location");
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
+  
+  
   
   while (ros::ok() && step < 10) {
     switch(step) {
       case 0: // Pickup
         ROS_INFO("Object placed at pickup location");
-        marker.pose.position.x = goal_1[0];
-        marker.pose.position.y = goal_1[1];
+        marker.pose.position.x = box_pose[0];
+        marker.pose.position.y = box_pose[1];
         marker.color.a = 1.0;
         step=1;
+        marker_pub.publish(marker);
         break;
         
       case 1: // Transit
         ROS_INFO("Object in transit to drop-off location");
-        marker.pose.position.x = goal_1[0];
-        marker.pose.position.y = goal_1[1];
         marker.color.a = 0.0;
         step=2;
+        marker_pub.publish(marker);
         break;
 
       case 2: // Goal
         ROS_INFO("Object placed at drop-off location");
-        marker.pose.position.x = goal_2[0];
-        marker.pose.position.y = goal_2[1];
+        marker.pose.position.x = box_pose[0];
+        marker.pose.position.y = box_pose[1];
         marker.color.a = 1.0;
         step=100;
+        marker_pub.publish(marker);
         break;
     }
-    marker_pub.publish(marker);
-    ros::Duration(5.0).sleep();
+    ros::spinOnce();
+    loop_rate.sleep();
   }
   ros::spin();
 }
