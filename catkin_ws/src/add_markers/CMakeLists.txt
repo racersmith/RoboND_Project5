@@ -10,6 +10,8 @@ project(add_markers)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   visualization_msgs
+  move_base_msgs
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -207,3 +209,6 @@ include_directories(
 
 add_executable(add_markers src/add_markers.cpp)
 target_link_libraries(add_markers ${catkin_LIBRARIES})
+
+add_executable(virtual_objects src/virtual_objects.cpp)
+target_link_libraries(virtual_objects ${catkin_LIBRARIES})
