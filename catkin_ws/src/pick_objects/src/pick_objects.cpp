@@ -22,7 +22,9 @@ void simulatePickup(){
 int main(int argc, char** argv){
   // Initialize the simple_navigation_goals node
   ros::init(argc, argv, "pick_objects");
-
+  
+  ros::NodeHandle n;
+  
   //tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
 
@@ -49,8 +51,7 @@ int main(int argc, char** argv){
   ac.waitForResult();
 
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
-    ROS_INFO("Pickup location reached");
-    
+    ROS_INFO("Pickup location reached");    
     simulatePickup();
   
     // Define a position and orientation for the robot to reach
