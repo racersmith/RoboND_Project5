@@ -6,9 +6,9 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 
-double x[2] = {2.75, 1.0};
-double y[2] = {-0.83, -4.6};
-double w[2] = {-1.35, -2.9};
+double x[2] = {-2.9, 1.5};
+double y[2] = {0.25, 1.7};
+double w[2] = {0.0, 1.0};
 
 
 void simulatePickup(){
