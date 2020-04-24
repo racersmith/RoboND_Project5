@@ -13,12 +13,13 @@ xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; ro
 sleep 5
 
 # Launch rviz
-xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; roslaunch turtlebot_rviz_launchers view_navigation.launch" &
+# xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; roslaunch turtlebot_rviz_launchers view_navigation.launch" &
+xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun rviz rviz -d src/rvizConfig/full.rviz" &
 sleep 5
 
 # Launch virtual object
-# xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun add_markers add_markers" & 
+xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun add_markers add_markers" & 
 # sleep 5
 
 # Launch pick
-xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun pick_objects pick_objects"
+# xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun pick_objects pick_objects"
