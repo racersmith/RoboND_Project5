@@ -6,9 +6,12 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 
-double x[2] = {-2.9, 1.5};
-double y[2] = {0.25, 1.7};
-double w[2] = {0.0, 1.0};
+double x[2] = {-3.00, 1.49};
+double y[2] = {0.16, 1.43};
+double w[2] = {0.68, 0.02};
+
+double goal_1[4] = {-3.00, 0.116, -0.75, 0.65};
+double goal_2[4] = {1.49, 1.43, -0.03, 0.99};
 
 
 void simulatePickup(){
@@ -39,9 +42,10 @@ int main(int argc, char** argv){
   goal.target_pose.header.stamp = ros::Time::now();
 
   // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = x[0];
-  goal.target_pose.pose.position.y = y[0];
-  goal.target_pose.pose.orientation.w = w[0];
+  goal.target_pose.pose.position.x = goal_1[0];
+  goal.target_pose.pose.position.y = goal_1[1];
+  goal.target_pose.pose.orientation.z = goal_1[2];
+  goal.target_pose.pose.orientation.w = goal_1[3];
 
   // Send the goal position and orientation for the robot to reach
   ROS_INFO("Sending pickup location");
@@ -54,9 +58,10 @@ int main(int argc, char** argv){
     simulatePickup();
   
     // Define a position and orientation for the robot to reach
-    goal.target_pose.pose.position.x = x[1];
-    goal.target_pose.pose.position.y = y[1];
-    goal.target_pose.pose.orientation.w = w[1];
+    goal.target_pose.pose.position.x = goal_2[0];
+    goal.target_pose.pose.position.y = goal_2[1];
+    goal.target_pose.pose.orientation.z = goal_2[2];
+    goal.target_pose.pose.orientation.w = goal_2[3];
 
     // Send the goal position and orientation for the robot to reach
     ROS_INFO("Sending dropoff location");
