@@ -6,10 +6,6 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 
-double x[2] = {-3.00, 1.49};
-double y[2] = {0.16, 1.43};
-double w[2] = {0.68, 0.02};
-
 double goal_1[4] = {-3.00, 0.116, -0.75, 0.65};
 double goal_2[4] = {1.49, 1.43, -0.03, 0.99};
 

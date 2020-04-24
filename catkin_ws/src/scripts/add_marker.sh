@@ -14,7 +14,7 @@ sleep 5
 
 # Launch rviz
 # xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; roslaunch turtlebot_rviz_launchers view_navigation.launch" &
-xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun rviz rviz -d src/rvizConfig/full.rviz" &
+xterm -e " source /home/workspace/RoboND_Project5/catkin_ws/devel/setup.bash; rosrun rviz rviz -d /home/workspace/RoboND_Project5/catkin_ws/src/rvizConfig/full.rviz" &
 sleep 5
 
 # Launch virtual object
