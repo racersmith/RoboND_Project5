@@ -100,14 +100,12 @@ int main( int argc, char** argv ) {
         marker.pose.position.x = box_pose[0];
         marker.pose.position.y = box_pose[1];
         marker.color.a = 1.0;
-        step=1;
         marker_pub.publish(marker);
         break;
         
       case 1: // Transit
         ROS_INFO("Object in transit to drop-off location");
         marker.color.a = 0.0;
-        step=2;
         marker_pub.publish(marker);
         break;
 
